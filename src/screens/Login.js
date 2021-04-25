@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import NoAuth from '../layout/NoAuth'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-
+import * as api from "../services/auth"
+import { useHistory } from 'react-router';
 const login = {
     email: 'test@test.com',
     password: '123456'
 }
 
 const AlertLogin = (props) => {
-
+    
     useEffect(() => {
         console.log('mounting');
         return () => {
@@ -53,6 +54,7 @@ const AlertLogin = (props) => {
 // if(unmount === function) ? unmount() : null
 
 function Login() {
+    const history = useHistory();
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
     const [rememberMe, setRememberMe] = useState(false)
@@ -62,14 +64,30 @@ function Login() {
         error: '',
     })
 
-    console.log(errors)
+    // console.log(errors)
 
     const onSubmit = (data) => {
-        if (data.email === login.email && login.password === data.password) {
-            setCheckLogin({ isSuccess: true, error: '' })
-        } else {
-            setCheckLogin({ isSuccess: false, error: 'Login Fail.' })
+        const param = { 
+            username : data.email,
+            password : data.password
         }
+        
+        api.login(param)
+        .then(res => {
+            console.log('Success==:>',res.data);
+            setCheckLogin({ isSuccess: true, error: '' })
+            history.push('/')
+        })
+        .catch(error => {
+            console.log('Error==:>',error);
+            setCheckLogin({ isSuccess: false, error: 'Login Fail.' })
+        })
+        // if (data.email === login.email && login.password === data.password) {
+        //     setCheckLogin({ isSuccess: true, error: '' })
+        // } else {
+        //     setCheckLogin({ isSuccess: false, error: 'Login Fail.' })
+        // }
+
         reset()
     }
 

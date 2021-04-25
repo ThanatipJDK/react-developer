@@ -8,11 +8,6 @@ function Auth(props) {
     const {value, dispatch} = useContext(Context)
     console.log(value);
 
-    const user = {
-        username : 'xxxx',
-        logo: logo
-    }
-
     const handleToggle = () => {
         dispatch(actions.ToggleNavbar(!value.navbar.expanded))
       

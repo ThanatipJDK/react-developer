@@ -1,31 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import NoAuth from '../layout/NoAuth'
-import { Form, Button, Alert } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-
-const login = {
-    email: 'test@test.com',
-    password: '123456'
-}
-
-// let anonyUseEffect
-
-// Login()
-// const unmount = anonyUseEffect()
-
-// if(unmount === function) ? unmount() : null
-
+import * as api from "../services/auth"
+import { useHistory } from 'react-router';
 function Register() {
+    const history = useHistory();
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
-    const [checkLogin, setCheckLogin] = useState({
-        isSuccess: false,
-        error: '',
-    })
-
-
     const onSubmit = (data) => {
-        console.log(data);
+        const param = {
+            username  : data.email,
+            password  : data.password,
+            firstname : data.firstname,
+            lastname  : data.lastname
+        }
+        console.log(param);
+        api.register(param)
+        .then(res => {
+            console.log('Success==:>',res.data);
+            history.push('/')
+        })
+        .catch(error => {
+            console.log('Error==:>',error);
+        })
         reset()
     }
 
