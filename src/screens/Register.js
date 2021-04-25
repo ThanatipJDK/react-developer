@@ -83,7 +83,7 @@ function Register() {
                         type='text'
                         placeholder='FirstName'
                     />
-                    {errors?.password?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ password</p>}
+                    {errors?.password?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ FirstName</p>}
                 </div>
 
                 <div className="form-floating">
@@ -95,7 +95,7 @@ function Register() {
                         type='text'
                         placeholder='LastName'
                     />
-                    {errors?.password?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ password</p>}
+                    {errors?.password?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ LastName</p>}
                 </div>
                 
                 <Button type='submit' variant='primary' block>Sign in</Button>
